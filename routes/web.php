@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Service;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', static function () {
+    return view('home',[
+        'services' => Service::all(),
+    ]);
+})->name('home');
+
+Route::get('/services/{service:slug}', static function(Service $service) {
+    return view('service',[
+        'service' => $service,
+    ]);
+})->name('services');
